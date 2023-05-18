@@ -5,8 +5,15 @@ import json
 interval = 60
 
 # Define a lista de arquivos a serem processados
-filenames = ['monday.tcpdump', 'tuesday.tcpdump',
-             'wednesday.tcpdump', 'thursday.tcpdump', 'friday.tcpdump']
+filenames = [
+    'monday.tcpdump',
+    'tuesday.tcpdump',
+    'wednesday.tcpdump',
+    'thursday.tcpdump',
+    'friday.tcpdump'
+]
+
+print("Iniciando a tradução doas arquivos tcpdump para Json.")
 
 # Loop por cada arquivo
 for filename in filenames:
@@ -19,11 +26,12 @@ for filename in filenames:
     # Executa o comando Tshark e processa a saída
     # frame.cap_len
     try:
-        p = subprocess.Popen(['tshark', '-r', path, '-T', 'fields', '-e',
-                             'frame.time_epoch', '-e', 'frame.len'], stdout=subprocess.PIPE)
+        p = subprocess.Popen(['tshark', '-r', path, '-T', 'fields', '-e', 'frame.time_epoch', '-e', 'frame.len'],
+                             stdout=subprocess.PIPE)
+
     except FileNotFoundError:
         print(f'O arquivo {filename} não foi encontrado.')
-        continue
+        break
 
     for line in iter(p.stdout.readline, b''):
         # Divide a linha em campos
@@ -59,6 +67,7 @@ for filename in filenames:
 
     print(f'O arquivo {output_filename} foi gerado com sucesso.')
 
+print("Iniciando a concatenação dos Json.")
 
 # Cria um dicionário vazio para armazenar os dados de todos os Json
 full_data = {}
@@ -80,6 +89,7 @@ for day in week_days:
         full_data[timestamp]["avg_len"] = full_data[timestamp]["total_len"] / \
             full_data[timestamp]["count"]
 
+# Cria um novo arquivo Json com os dados de todos os outros Json concatenados
 with open('fullData.json', 'w') as f:
     json.dump(full_data, f)
 
