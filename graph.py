@@ -1,8 +1,11 @@
 import matplotlib.pyplot as plt
 import wma as wma
 import matplotlib.dates as mdates
+import metricas
 
 dados = wma.gera_xy() #chama a função do arquivo wma que gera e retorna os dados para o grafico
+NMSE = metricas.cal_nmse()
+MAPE = metricas.cal_mape()
 
 fig, graph = plt.subplots()
 
@@ -13,6 +16,7 @@ graph.legend()
 graph.set_xlabel('Timestamp')
 graph.set_ylabel('Valores')
 
+graph.text(0.5, 0.95, f'NMSE = {NMSE}\nMAPE = {MAPE}%', horizontalalignment='center', verticalalignment='center', transform=graph.transAxes)
 
 plt.show() #gera o grafico
 
