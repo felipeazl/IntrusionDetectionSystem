@@ -18,14 +18,5 @@ graph.set_ylabel('Valores')
 
 graph.text(0.5, 0.95, f'NMSE = {NMSE}\nMAPE = {MAPE}%', horizontalalignment='center', verticalalignment='center', transform=graph.transAxes)
 
+plt.savefig('grafico.png')
 plt.show() #gera o grafico
-
-# plt.figure(layout='constrained')
-# plt.plot(dados[0], dados[1], label="Marcações")
-# plt.plot(dados[0], dados[2], label="WMA")
-# plt.xlabel("Timestamp")
-# plt.ylabel("valores")
-# plt.title("INCLUIR TÍTULO")
-# plt.legend("legenda de testes");
-
-# plt.show()

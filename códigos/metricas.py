@@ -14,12 +14,10 @@ def cal_nmse():
         if "total_len" in obj:
             total_len_arr.append(obj["total_len"])
 
-    NMSE = np.subtract(wma, total_len_arr)
+    NMSE = np.subtract(total_len_arr, wma)
     NMSE = np.square(NMSE)
-    NMSE = np.sum(NMSE)
-    NMSE = NMSE / len(wma)
-    NMSE = np.sqrt(NMSE)
-    NMSE = NMSE / np.mean(total_len_arr)
+    NMSE = np.mean(NMSE)
+    NMSE = NMSE / np.var(total_len_arr)
     NMSE = round(NMSE, 2)
     return NMSE
 
@@ -29,17 +27,15 @@ def cal_mape():
 
     wma = WMA.gera_list_wma()
 
-    count_arr = []
+    total_len_arr = []
     for i in data:
         obj = data[i]
-        if "count" in obj:
-            count_arr.append(obj["count"])
+        if "total_len" in obj:
+            total_len_arr.append(obj["total_len"])
 
-    MAPE = np.subtract(wma, count_arr)
-    MAPE = np.abs(MAPE)
-    MAPE = np.divide(MAPE, count_arr)
-    MAPE = np.sum(MAPE)
-    MAPE = MAPE / len(wma)
-    MAPE = MAPE * 100
+    MAPE = np.abs(np.subtract(total_len_arr, wma))
+    MAPE = np.divide(MAPE, total_len_arr)
+    MAPE = [x * 100 for x in MAPE]
+    MAPE = np.mean(MAPE)
     MAPE = round(MAPE, 2)
     return MAPE
