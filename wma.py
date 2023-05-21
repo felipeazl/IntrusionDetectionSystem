@@ -36,7 +36,7 @@ def gera_xy():
     formato = "%Y-%m-%d %H:%M:%S"
     for key in dados.keys():
         dt = datetime.datetime.fromtimestamp(int(key))
-        list_timestamp.append(dt.strftime(formato))
+        list_timestamp.append(dt)
         list_len.append(dados[key]["total_len"])
     return list_timestamp, list_len, list_wma
 
