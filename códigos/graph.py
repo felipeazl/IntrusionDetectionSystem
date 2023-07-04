@@ -22,5 +22,5 @@ def geraGrafico(dados, NMSE, MAPE, nome):
     total_anomalias = len(dados[3])
     graph.text(0.5, 0.95, f'NMSE = {NMSE}\nMAPE = {MAPE}%\nTotal Anomalias = {total_anomalias}', horizontalalignment='center', verticalalignment='center', transform=graph.transAxes)
 
-    plt.savefig(f'./graficos/{nome}.png')
+    plt.savefig(f'./graficos3x/{nome}.png')
     plt.show() #gera o grafico
