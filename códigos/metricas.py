@@ -2,15 +2,15 @@ import json
 import numpy as np
 import wma as WMA
 
-def cal_nmse():
-    with open("fullData.json") as f:
-        data = json.load(f)
+def cal_nmse(jsonData):
+    # with open("./json/tuesday.json") as f:
+    #     data = json.load(f)
 
-    wma = WMA.gera_list_wma()
+    wma = WMA.gera_list_wma(jsonData)
 
     total_len_arr = []
-    for i in data:
-        obj = data[i]
+    for i in jsonData:
+        obj = jsonData[i]
         if "total_len" in obj:
             total_len_arr.append(obj["total_len"])
 
@@ -21,15 +21,15 @@ def cal_nmse():
     NMSE = round(NMSE, 2)
     return NMSE
 
-def cal_mape():
-    with open("fullData.json") as f:
-        data = json.load(f)
+def cal_mape(jsonData):
+    # with open("./json/tuesday.json") as f:
+    #     data = json.load(f)
 
-    wma = WMA.gera_list_wma()
+    wma = WMA.gera_list_wma(jsonData)
 
     total_len_arr = []
-    for i in data:
-        obj = data[i]
+    for i in jsonData:
+        obj = jsonData[i]
         if "total_len" in obj:
             total_len_arr.append(obj["total_len"])
 

@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 
-def geraGrafico(dados, NMSE, MAPE):
+def geraGrafico(dados, NMSE, MAPE, nome):
     fig, graph = plt.subplots()
 
     graph.plot(dados[0], dados[1], label='Medições', zorder=1) #eixo x = timestamp e eixo y = medições padrão
@@ -22,5 +22,5 @@ def geraGrafico(dados, NMSE, MAPE):
     total_anomalias = len(dados[3])
     graph.text(0.5, 0.95, f'NMSE = {NMSE}\nMAPE = {MAPE}%\nTotal Anomalias = {total_anomalias}', horizontalalignment='center', verticalalignment='center', transform=graph.transAxes)
 
-    plt.savefig('grafico.png')
+    plt.savefig(f'./graficos/{nome}.png')
     plt.show() #gera o grafico

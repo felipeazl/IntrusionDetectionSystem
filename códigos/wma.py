@@ -3,8 +3,8 @@ import datetime
 import deteccaoAnomalias
 
 # Abre o arquivo JSON
-with open('fullData.json') as arquivo:
-    dados = json.load(arquivo)
+# with open('./json/tuesday.json') as arquivo:
+#     dados = json.load(arquivo)
 
 # função que calcula a WMA de cada lista com 10 elementos e retorna o novo valor
 def cal_wma(list_values):
@@ -15,14 +15,14 @@ def cal_wma(list_values):
     return wma
 
 #percorre todos os dados em janelas de 10 e armaze o calculo de wma dos dados de cada janela list_wma 
-def gera_list_wma():
+def gera_list_wma(jsonData):
     # inicia a lista com os 9 primeiros iten, este valor foi obtido a partir do primeiro wam calculado do conjunto
     list_wma = [104976.0,104976.0,104976.0,104976.0,104976.0,104976.0,104976.0,104976.0,104976.0]
     #lista auxiliar utilizada para marcar os 10 elementos da janela atual
     aux_list = []
-    for key in dados.keys():
+    for key in jsonData.keys():
         if len(aux_list) <= 10:
-            aux_list.append(int(dados[key]["total_len"]))
+            aux_list.append(int(jsonData[key]["total_len"]))
             if len(aux_list) == 10:
                 #soma = sum(aux_list)
                 calculoWma = cal_wma(aux_list)
@@ -31,15 +31,15 @@ def gera_list_wma():
     return list_wma
    
 #função que organiza e retorna os dados para a geração do grafico
-def gera_xy():
+def gera_xy(jsonData):
     list_timestamp = []
     list_len = []
-    list_wma = gera_list_wma()
+    list_wma = gera_list_wma(jsonData)
     #formato = "%Y-%m-%d %H:%M:%S"
-    for key in dados.keys():
+    for key in jsonData.keys():
         dt = datetime.datetime.fromtimestamp(int(key))
         list_timestamp.append(dt)
-        list_len.append(dados[key]["total_len"])
+        list_len.append(jsonData[key]["total_len"])
     listaAnomalias = deteccaoAnomalias.anomalia(list_len, list_wma)
     return list_timestamp, list_len, list_wma, listaAnomalias
 
