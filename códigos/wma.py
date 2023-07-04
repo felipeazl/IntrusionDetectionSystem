@@ -1,5 +1,6 @@
 import json
 import datetime
+import deteccaoAnomalias
 
 # Abre o arquivo JSON
 with open('fullData.json') as arquivo:
@@ -23,8 +24,9 @@ def gera_list_wma():
         if len(aux_list) <= 10:
             aux_list.append(int(dados[key]["total_len"]))
             if len(aux_list) == 10:
-                soma = sum(aux_list)
-                list_wma.append(cal_wma(aux_list))
+                #soma = sum(aux_list)
+                calculoWma = cal_wma(aux_list)
+                list_wma.append(calculoWma)
                 aux_list.pop(0)
     return list_wma
    
@@ -33,10 +35,11 @@ def gera_xy():
     list_timestamp = []
     list_len = []
     list_wma = gera_list_wma()
-    formato = "%Y-%m-%d %H:%M:%S"
+    #formato = "%Y-%m-%d %H:%M:%S"
     for key in dados.keys():
         dt = datetime.datetime.fromtimestamp(int(key))
         list_timestamp.append(dt)
         list_len.append(dados[key]["total_len"])
-    return list_timestamp, list_len, list_wma
+    listaAnomalias = deteccaoAnomalias.anomalia(list_len, list_wma)
+    return list_timestamp, list_len, list_wma, listaAnomalias
 
